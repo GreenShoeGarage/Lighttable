@@ -1,4 +1,4 @@
-LIGHTTABLE v1.2.1
+LIGHTTABLE v1.2.2
 Static deployment package
 
 Upload the contents of this ZIP to:
