@@ -6,7 +6,7 @@ LIGHTTABLE is a local-first browser workbench for reading, inspecting, measuring
 
 It is built for engineers, fabricators, technicians, hardware developers, and makers who need a fast way to examine board files without uploading them to a remote service or installing a desktop computer-aided manufacturing suite.
 
-> Current release: **v1.5.0**<br>
+> Current release: **v1.5.1**<br>
 > License: **GPL-3.0**<br>
 > Standalone runtime dependencies: **None**<br>
 > Telemetry: **None**
@@ -103,12 +103,14 @@ INTAKE -> RENDER -> INSPECT -> MARK / EDIT -> OUTPUT
 
 - Dependency-free software projection using the same parsed board geometry as 2D
 - Orbit, pan, wheel zoom, and isometric, top, and bottom presets
-- Board extrusion, ordered manufacturing layers, projected drills, and approximate component bodies
+- Assembled top and bottom surfaces that hide reverse-side artwork and clip every visible feature to the detected board profile
+- PCB material mapping for solder mask, exposed copper, off-white silkscreen, plated holes, board edges, and dark component packages
+- Board extrusion, projected drills, and approximate component bodies
 - Adjustable board thickness, component height, visibility, and exploded layer spacing
 - Component and pad selection with a path back to precise 2D inspection
 - Deterministic scene limits for predictable performance on larger jobs
 
-The 3D view is an orientation and review model. Precise measurement, editing, 1:1 printing, and manufacturing decisions remain in the calibrated 2D view.
+At zero layer separation, the 3D view presents the camera-facing assembled surface. Adding separation deliberately switches to a diagnostic fabrication stack with both sides visible. The 3D view is an orientation and review model. Precise measurement, editing, 1:1 printing, and manufacturing decisions remain in the calibrated 2D view.
 
 ### Connectivity analysis
 
@@ -219,9 +221,9 @@ See [`TESTING.md`](TESTING.md) for the complete hostile-input and release criter
 
 ## Performance and quality gates
 
-The v1.5.0 release includes:
+The v1.5.1 release includes:
 
-- 139 in-app parser, archive, geometry, connectivity, native-write-back, and 3D assertions
+- 143 in-app parser, archive, geometry, connectivity, native-write-back, and 3D assertions
 - 29 project-level tests
 - A generated-worker execution gate
 - A 6,000-feature inspection, connectivity, and 3D benchmark

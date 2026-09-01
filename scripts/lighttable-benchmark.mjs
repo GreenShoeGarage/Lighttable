@@ -13,7 +13,7 @@ function elementStub() {
   return {
     textContent: "", innerHTML: "", className: "", style: { setProperty() {}, getPropertyValue() { return ""; } },
     classList: { add() {}, remove() {}, toggle() {}, contains() { return false; } }, setAttribute() {}, getAttribute() { return null; },
-    getContext() { return { clearRect() {}, save() {}, restore() {}, beginPath() {}, closePath() {}, moveTo() {}, lineTo() {}, fill() {}, stroke() {}, fillText() {}, strokeText() {}, translate() {}, rotate() {}, fillRect() {}, strokeRect() {}, arc() {}, ellipse() {}, setTransform() {}, drawImage() {}, setLineDash() {} }; }, getBoundingClientRect() { return { width: 1600, height: 900, left: 0, top: 0 }; },
+    getContext() { return { clearRect() {}, save() {}, restore() {}, beginPath() {}, closePath() {}, moveTo() {}, lineTo() {}, clip() {}, fill() {}, stroke() {}, fillText() {}, strokeText() {}, translate() {}, rotate() {}, fillRect() {}, strokeRect() {}, arc() {}, ellipse() {}, setTransform() {}, drawImage() {}, setLineDash() {} }; }, getBoundingClientRect() { return { width: 1600, height: 900, left: 0, top: 0 }; },
     addEventListener() {}, append() {}, appendChild() {}, showModal() {}, querySelectorAll() { return []; },
   };
 }

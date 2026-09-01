@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.5.1 - 2026-09-01
+
+- Reworked the default 3D view from a translucent all-layer stack into an assembled, camera-facing PCB surface.
+- Added fabrication roles for substrate, board edge, top and bottom copper, soldermask openings, silkscreen, paste, drills, and component packages.
+- Hid reverse-side and internal artwork at zero layer separation. A nonzero separation now intentionally switches to the diagnostic exploded fabrication stack.
+- Clipped assembled surface artwork to the detected board profile so Gerber features cannot float beyond the substrate.
+- Rebalanced materials around soldermask green, muted exposed copper, off-white silkscreen, tan board edges, and dark component packages.
+- Verified the supplied 5,175-feature legacy Gerber job against its 16.4973 x 37.9451 mm outline. Top shows GTL, GTO, GTS, and drill geometry; bottom shows GBL, GBO, GBS, and drill geometry.
+- Expanded the in-app conformance harness to 143 assertions. The project release suite remains at 29 tests.
+
 ## v1.5.0 - 2026-09-01
 
 - Added an interactive, dependency-free 3D review mode derived from the parsed board outline, manufacturing layers, drills, pads, tracks, regions, text, and component placements.
