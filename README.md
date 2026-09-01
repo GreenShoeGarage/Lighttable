@@ -1,13 +1,16 @@
-LIGHTTABLE v1.2.3 static deployment
-===================================
+LIGHTTABLE v1.5.0 STATIC RELEASE
+================================
 
-Upload the contents of this ZIP so index.html is served at:
+Deploy index.html as a static file, or open it directly in a modern browser.
 
-https://greenshoegarage.com/projects/lighttable/
+LIGHTTABLE is local-first and offline-capable. Board files remain in the browser. The release has no server, CDN, telemetry, or runtime network dependency.
 
-LIGHTTABLE is a standalone local-first browser application. It does not need a
-server runtime, build step, CDN, remote font, account, or telemetry endpoint.
+This release adds an interactive 3D review model with orbit, pan, zoom, view presets, adjustable board thickness, approximate component height, exploded layer spacing, selection, and persistent camera settings.
 
-Release: v1.2.3
-Date: 2026-09-01
+The 3D view is derived from parsed manufacturing geometry. It is not a STEP assembly or source-certified mechanical clearance model. Material stack, mask openings, plated barrels, package bodies, and component heights remain approximate. Precise measurement, editing, 1:1 printing, and manufacturing decisions stay in the calibrated 2D view.
+
+Deployment target used for this build:
+https://greenshoegarage.com/projects/lighttable
+
+License: GPL-3.0
 
