@@ -171,9 +171,9 @@ function altiumCfbFixture() {
   return new Uint8Array(out);
 }
 
-test("ships the v1.5.1 standalone release marker", () => {
-  assert.match(html, /LIGHTTABLE :: lighttable\.html :: v1\.5\.1/);
-  assert.match(html, /instrument:'1\.5\.1'/);
+test("ships the v1.5.2 standalone release marker", () => {
+  assert.match(html, /LIGHTTABLE :: lighttable\.html :: v1\.5\.2/);
+  assert.match(html, /instrument:'1\.5\.2'/);
   assert.match(html, /GEOMETRY_TOLERANCE_MM=\.01/);
   assert.match(html, /CONNECTIVITY_TOLERANCE_MM=\.025/);
 });
@@ -225,6 +225,8 @@ test("builds a bounded interactive 3D review scene", () => {
   assert.match(html, /ctx\.clip\(\)/);
   assert.match(html, /display:state\.display,scene3d:/);
   assert.match(html, /state\.display=saved\.display==='3d'/);
+  assert.match(html, /normalize3DScene\(saved\.scene3d\)/);
+  assert.match(html, /if\(state\.display==='3d'\)threePreset\(t\.dataset\.view\)/);
   const { context } = harness();
   new vm.Script(`${script}
     const board3d=newBoard('3D release gate');
@@ -236,15 +238,17 @@ test("builds a bounded interactive 3D review scene", () => {
     ];
     board3d.components=[{id:'u1',kind:'component',ref:'U1',x:25,y:15,w:8,h:5,rot:30,side:'Top'}];
     const plan3d=threeRenderPlan(board3d),scene3d={...state.scene3d,thickness:1.6,componentHeight:3,explode:2},projection3d=project3D({x:25,y:15,z:.8},scene3d,board3d.bounds,{width:1000,height:700}),faces3d=threeComponentFaces(board3d.components[0],scene3d);
-    state.board=board3d;state.display='3d';state.scene3d=scene3d;draw3D();
+    state.board=board3d;state.display='3d';state.scene3d=scene3d;threeProjection=null;const polygonProjection=threeProjectPolygon([{x:0,y:0,z:0},{x:50,y:0,z:0},{x:50,y:30,z:0}]);draw3D();
     const topScene={...scene3d,explode:0,pitch:55},bottomScene={...scene3d,explode:0,pitch:-55},maskMaterial=threeLayerMaterial({type:'Soldermask',sourceName:'board.GTS'}),copperMaterial=threeLayerMaterial({type:'Copper Top',sourceName:'board.GTL'});
-    globalThis.threeGate={outline:plan3d.outline.length,entries:plan3d.entries.length,sampled:plan3d.sampled,topZ:threeLayerZ(board3d.layers[0],0,2,scene3d),bottomZ:threeLayerZ(board3d.layers[1],1,2,scene3d),projection:projection3d,sideFaces:faces3d.sides.length,topFaceZ:faces3d.top[0].z,status:document.getElementById('threeStatusText').textContent,roles:[threeLayerRole({type:'Copper Top',sourceName:'board.GTL'}),threeLayerRole({type:'Soldermask',sourceName:'board.GTS'}),threeLayerRole({type:'Silkscreen',sourceName:'board.GBO'})],topVisible:threeLayerVisible(board3d.layers[0],topScene),reverseVisible:threeLayerVisible(board3d.layers[1],topScene),bottomVisible:threeLayerVisible(board3d.layers[1],bottomScene),maskMaterial,copperMaterial};
+    const migratedScene=normalize3DScene({yaw:170,pitch:-70,zoom:.25,panX:9000,panY:-9000,thickness:2}),currentScene=normalize3DScene({cameraVersion:THREE_CAMERA_VERSION,yaw:20,pitch:-40,zoom:2,panX:15,panY:-8});
+    globalThis.threeGate={outline:plan3d.outline.length,entries:plan3d.entries.length,sampled:plan3d.sampled,topZ:threeLayerZ(board3d.layers[0],0,2,scene3d),bottomZ:threeLayerZ(board3d.layers[1],1,2,scene3d),projection:projection3d,polygonProjection,sideFaces:faces3d.sides.length,topFaceZ:faces3d.top[0].z,status:document.getElementById('threeStatusText').textContent,roles:[threeLayerRole({type:'Copper Top',sourceName:'board.GTL'}),threeLayerRole({type:'Soldermask',sourceName:'board.GTS'}),threeLayerRole({type:'Silkscreen',sourceName:'board.GBO'})],topVisible:threeLayerVisible(board3d.layers[0],topScene),reverseVisible:threeLayerVisible(board3d.layers[1],topScene),bottomVisible:threeLayerVisible(board3d.layers[1],bottomScene),maskMaterial,copperMaterial,migratedScene,currentScene};
   `).runInContext(context);
   assert.equal(context.threeGate.outline, 4);
   assert.equal(context.threeGate.entries, 2);
   assert.equal(context.threeGate.sampled, false);
   assert.ok(context.threeGate.topZ > context.threeGate.bottomZ);
   assert.ok(Number.isFinite(context.threeGate.projection.x + context.threeGate.projection.y));
+  assert.ok(context.threeGate.polygonProjection.every(point => Number.isFinite(point.x + point.y + point.depth + point.scale)));
   assert.equal(context.threeGate.sideFaces, 4);
   assert.ok(context.threeGate.topFaceZ > 0);
   assert.deepEqual([...context.threeGate.roles], ["copper-top", "mask-top", "silk-bottom"]);
@@ -252,6 +256,12 @@ test("builds a bounded interactive 3D review scene", () => {
   assert.equal(context.threeGate.reverseVisible, false);
   assert.equal(context.threeGate.bottomVisible, true);
   assert.ok(context.threeGate.maskMaterial.alpha > context.threeGate.copperMaterial.alpha);
+  assert.deepEqual({...context.threeGate.migratedScene},{yaw:-35,pitch:55,zoom:1,panX:0,panY:0,thickness:2,componentHeight:3,explode:0,components:true,cameraVersion:2});
+  assert.equal(context.threeGate.currentScene.yaw,20);
+  assert.equal(context.threeGate.currentScene.pitch,-40);
+  assert.equal(context.threeGate.currentScene.zoom,2);
+  assert.equal(context.threeGate.currentScene.panX,15);
+  assert.equal(context.threeGate.currentScene.panY,-8);
   assert.match(context.threeGate.status, /2 features.*1 components/);
 });
 
@@ -259,7 +269,7 @@ test("passes all parser, geometry, connectivity, KiCad, Altium, Eagle, DXF, and 
   assert.ok(script);
   const { context, elements } = harness();
   new vm.Script(`${script}\nstate.board=newBoard('test');selfTest();`).runInContext(context);
-  assert.equal(elements.get("modalTitle").textContent, "SELF-TEST 143/143");
+  assert.equal(elements.get("modalTitle").textContent, "SELF-TEST 146/146");
   assert.doesNotMatch(elements.get("modalBody").innerHTML, /test-fail/);
 });
 
@@ -573,7 +583,7 @@ test("certifies generated DXF through two re-imports", () => {
   assert.equal(context.dxfGeneratedGate.reopened, 9);
   assert.equal(context.dxfGeneratedGate.identityReopened, 9);
   assert.equal(context.dxfGeneratedGate.tolerance, 0.01);
-  assert.match(context.dxfGeneratedGate.output, /Generated by LIGHTTABLE v1\.5\.1/);
+  assert.match(context.dxfGeneratedGate.output, /Generated by LIGHTTABLE v1\.5\.2/);
 });
 
 test("maps ODB++ matrix features, components, and EDA FID nets", () => {

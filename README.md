@@ -6,7 +6,7 @@ LIGHTTABLE is a local-first browser workbench for reading, inspecting, measuring
 
 It is built for engineers, fabricators, technicians, hardware developers, and makers who need a fast way to examine board files without uploading them to a remote service or installing a desktop computer-aided manufacturing suite.
 
-> Current release: **v1.5.1**<br>
+> Current release: **v1.5.2**<br>
 > License: **GPL-3.0**<br>
 > Standalone runtime dependencies: **None**<br>
 > Telemetry: **None**
@@ -103,6 +103,7 @@ INTAKE -> RENDER -> INSPECT -> MARK / EDIT -> OUTPUT
 
 - Dependency-free software projection using the same parsed board geometry as 2D
 - Orbit, pan, wheel zoom, and isometric, top, and bottom presets
+- Persistent Top and Bottom canvas controls that refit the requested 3D side, plus automatic migration of stale camera state after renderer upgrades
 - Assembled top and bottom surfaces that hide reverse-side artwork and clip every visible feature to the detected board profile
 - PCB material mapping for solder mask, exposed copper, off-white silkscreen, plated holes, board edges, and dark component packages
 - Board extrusion, projected drills, and approximate component bodies
@@ -221,9 +222,9 @@ See [`TESTING.md`](TESTING.md) for the complete hostile-input and release criter
 
 ## Performance and quality gates
 
-The v1.5.1 release includes:
+The v1.5.2 release includes:
 
-- 143 in-app parser, archive, geometry, connectivity, native-write-back, and 3D assertions
+- 146 in-app parser, archive, geometry, connectivity, native-write-back, camera-recovery, and 3D assertions
 - 29 project-level tests
 - A generated-worker execution gate
 - A 6,000-feature inspection, connectivity, and 3D benchmark

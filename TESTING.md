@@ -2,7 +2,7 @@
 
 ## In-app self-test
 
-Open ABOUT and select **Run self-test**. The 143-test harness covers:
+Open ABOUT and select **Run self-test**. The 146-test harness covers:
 
 1. Gerber fixed-point coordinates, parameter tokenization, layer identification, arcs, regions, step and repeat, polarity, common aperture macros, and exact zero-width hairline apertures
 2. Excellon G85 and routed slots, M71 and M72 legacy unit commands, leading-zero decoding, and contradictory-unit refusal
@@ -29,6 +29,7 @@ Open ABOUT and select **Run self-test**. The 143-test harness covers:
 23. Altium PcbDoc classification, ASCII primitive coverage, mil and millimetre scaling, native layer and net mapping, read-only enforcement, binary primitive framing, and malformed-record refusal
 24. 3D outline normalization, perspective projection, top and bottom layer ordering, exploded spacing, top and bottom component extrusion, deterministic scene budgeting, and fidelity disclosure
 25. 3D PCB material roles, top and bottom reverse-side occlusion, assembled-surface clipping, and soldermask-opening interpretation
+26. Versioned 3D camera migration, stale offscreen framing recovery, current-camera-state retention, and finite polygon projection arguments
 
 ## Manual release checks
 
@@ -39,6 +40,8 @@ Open ABOUT and select **Run self-test**. The 143-test harness covers:
 - At zero layer separation, verify only the camera-facing side and through holes are shown. Reverse copper and silkscreen must not bleed through.
 - Verify the substrate dominates the view, copper is muted gold, mask openings appear as exposed copper, silkscreen is off-white, component packages are dark, and all surface artwork is clipped to the board outline.
 - Set a nonzero layer separation and verify the status changes to an exploded fabrication stack and both sides become visible intentionally.
+- Pan the board fully offscreen, save in 3D, replace the app with this release, and reload. Verify the migrated camera recenters the board while preserving thickness, component height, separation, and component visibility.
+- In 3D from any station, select Top and Bottom in the canvas controls. Verify each control resets pan and zoom, shows the requested surface, and agrees with the 3D status badge.
 - Load the supplied legacy Eagle Gerber set. Top must show only GTL, GTO, GTS, and drill geometry; bottom must show only GBL, GBO, GBS, and drill geometry against the 16.4973 x 37.9451 mm outline.
 - Drag to orbit, Shift-drag to pan, use the wheel to zoom, and verify Isometric, Top, Bottom, and Reset camera controls return stable views.
 - Adjust board thickness, component height, and layer separation. Verify the board extrusion, component bodies, and exploded layer positions update without changing manufacturing geometry.
@@ -59,7 +62,7 @@ Open ABOUT and select **Run self-test**. The 143-test harness covers:
 - Export connectivity JSON and CSV and verify network status, source names, layer membership, opens, conflicts, and dangling endpoints.
 - Add a pin, box, and arrow annotation. Export and re-import the Markup Package.
 - Export PNG, PDF, placement CSV, and the fab ZIP.
-- Confirm the fab ZIP contains `FIDELITY.txt`, `ROUNDTRIP.txt`, and `ROUNDTRIP.json`, and reports v1.5.1 plus every declared numerical tolerance.
+- Confirm the fab ZIP contains `FIDELITY.txt`, `ROUNDTRIP.txt`, and `ROUNDTRIP.json`, and reports v1.5.2 plus every declared numerical tolerance.
 - Confirm imported Gerber aperture definitions and X2 file, aperture, and object attributes remain in the exported layer.
 - Confirm the fabrication export refuses download when a generated Gerber fails its automatic re-import comparison.
 - Load drill data with plated and non-plated tools and verify separate `board-PTH.drl` and `board-NPTH.drl` outputs.

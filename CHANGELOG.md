@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.5.2 - 2026-09-01
+
+- Fixed saved 3D camera state restoring the parsed board outside the visible canvas after the v1.5.1 renderer change.
+- Added a versioned 3D camera migration that resets stale pan, zoom, pitch, and yaw while preserving board thickness, component height, exploded spacing, and component visibility.
+- Made the persistent Top and Bottom canvas controls select and fit the corresponding 3D surface instead of changing only the 2D board-side state.
+- Corrected the active Top and Bottom control so it always agrees with the assembled surface named in the 3D status badge.
+- Fixed the 3D polygon projection helper passing `Array.map` index and array arguments into scene and bounds parameters, which produced `NaN` coordinates and a blank canvas.
+- Added projection-argument, restore-framing, and current-camera-state regression assertions. The in-app conformance harness now contains 146 assertions.
+
 ## v1.5.1 - 2026-09-01
 
 - Reworked the default 3D view from a translucent all-layer stack into an assembled, camera-facing PCB surface.
