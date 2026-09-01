@@ -1,0 +1,115 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../vendor/shadcn-tailwind-4.13.0.css";
+
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility scrollbar-gutter-stable {
+  scrollbar-gutter: stable;
+}
+
+:root {
+  --background: #050907;
+  --foreground: #e8f1eb;
+  --card: #0a110e;
+  --card-foreground: #e8f1eb;
+  --popover: #0a110e;
+  --popover-foreground: #e8f1eb;
+  --primary: #9fef00;
+  --primary-foreground: #07100d;
+  --secondary: #0d1712;
+  --secondary-foreground: #d6e3db;
+  --muted: #0d1712;
+  --muted-foreground: #91a29a;
+  --accent: #13221a;
+  --accent-foreground: #e8f1eb;
+  --destructive: #ff6b6b;
+  --border: #1e3128;
+  --input: #294437;
+  --ring: #9fef00;
+  --chart-1: #9fef00;
+  --chart-2: #d6a631;
+  --chart-3: #5ddcff;
+  --chart-4: #c79cff;
+  --chart-5: #ff6b6b;
+  --radius: 0.3125rem;
+  --sidebar: #0a110e;
+  --sidebar-foreground: #e8f1eb;
+  --sidebar-primary: #9fef00;
+  --sidebar-primary-foreground: #07100d;
+  --sidebar-accent: #13221a;
+  --sidebar-accent-foreground: #e8f1eb;
+  --sidebar-border: #1e3128;
+  --sidebar-ring: #9fef00;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.instrument-shell,
+.instrument-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
